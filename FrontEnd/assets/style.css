@@ -328,7 +328,20 @@ footer {
 	
 	background-color: white;
 	height: 60px;
-	
+	margin: 0;
+    padding: 0;
+    width: 100vw; 
+    box-sizing: border-box; 
+    position: relative; 
+    left: 50%;
+    right: 50%; 
+    margin-left: -50vw; 
+    margin-right: -50vw;
+}
+
+footer nav {
+	display:flex;
+	justify-content: flex-end;
 }
 
 footer nav ul {
@@ -339,6 +352,7 @@ footer nav ul {
 
 
 
+
 /*Ajout de la page de connexion*/
 
 
@@ -346,7 +360,7 @@ footer nav ul {
 	display: none;
 	justify-content: center;
 	align-items: center;
-	height: 100vh;
+	height: 69vh;
 }
 
 
@@ -407,4 +421,37 @@ input[type="submit"]:hover {
 #forgot-password  {
 	font-size: 14px;
 	color: #3D3D3D;
+}
+
+#login-error{
+	color: red;
+	display: none;
+}
+
+
+/*mode edition du site*/
+
+#mode-edition{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 59px;
+	background-color: black;
+	gap: 15px;
+}
+
+#mode-edition p {
+	color: white;
+}
+
+#mode-edition button{
+	background-color: white;
+	font-family: Work Sans;
+	color: #1D6154;
+	padding: 10px 20px;
+	margin: 0 5px;
+	border: 1px solid #1D6154;
+	border-radius: 60px;
+	cursor: pointer;
+	transition: background-color 0.3s;
 }

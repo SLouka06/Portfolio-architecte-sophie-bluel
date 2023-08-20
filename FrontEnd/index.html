@@ -14,6 +14,10 @@
 
 </head>
 <body>
+	<div id="mode-edition">
+		<p>Mode édition</p>
+		<button>publier les changements</button>
+	</div>
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
@@ -31,12 +35,16 @@
 			<form action="#" method="post" class="login-form">
 				<div class="form-group">
 					<label for="username">E-mail</label>
-					<input type="text" id="username" name="username" required>
+					<input type="text" id="email" name="username" required>
 				</div>
 				<div class="form-group">
 					<label for="password">Mot de passe:</label>
 					<input type="password" id="password" name="password" required>
 				</div>
+				<div id="login-error">
+					Erreur dans l’identifiant ou le mot de passe
+				</div>
+				
 				<div class="form-actions">
 					<input type="submit" value="Se connecter">
 				</div>

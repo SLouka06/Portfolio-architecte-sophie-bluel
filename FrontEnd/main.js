@@ -50,9 +50,42 @@ const loginContainer = document.querySelector('#connection-container');
 
 loginLink.addEventListener('click', function(e) {
     e.preventDefault();
-    mainContent.style.display = 'none';
+    mainContent.innerHTML = '';
     loginContainer.style.display = 'flex';
 });
+
+//fonctionalité de la page de connexion
+
+document.querySelector('.login-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById('email').value;  // Notez le changement ici
+    const password = document.getElementById('password').value;
+
+    // Envoyez ces valeurs à l'API
+    fetch('http://localhost:5678/api/users/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })  // Assurez-vous que ces clés correspondent à ce que l'API attend.
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.token) {
+            localStorage.setItem('token', data.token);
+            location.reload();
+        } else {
+            document.getElementById('login-error').style.display = 'block';
+        }
+    })
+    .catch(error => {
+        console.error('Erreur lors de la connexion:', error);
+    });
+});
+
+
+
 
 })
     .catch(error => {
