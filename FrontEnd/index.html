@@ -10,14 +10,17 @@
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 	<script src="main.js" defer></script>
+	<script src="https://kit.fontawesome.com/16e0d6a5a7.js" crossorigin="anonymous"></script>
 
 
 </head>
 <body>
 	<div id="mode-edition">
+		<i class="fa-regular fa-pen-to-square"></i>
 		<p>Mode édition</p>
 		<button>publier les changements</button>
 	</div>
+<div id="main-container">
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
@@ -56,6 +59,10 @@
 	<section id="introduction">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="">
+			<div class="modification">
+				<i class="fa-regular fa-pen-to-square"></i>
+				<button>modifier</button>
+			</div>
 		</figure>
 		<article>
 			<h2>Designer d'espace</h2>
@@ -65,13 +72,20 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+		<div class="title-container">
+			<h2>Mes Projets</h2>
+			<div class="modification">
+				<i class="fa-regular fa-pen-to-square"></i>
+				<button id="modal-btn">modifier</button>
+			</div>
+		</div>
 			<div class="filter-buttons"> <!--Ajouts des boutons filtre-->
 				<button class="filter" data-filter="all">Tous</button>
 				<button class="filter" data-filter="1">Objets</button>
 				<button class="filter" data-filter="2">Appartements</button>
 				<button class="filter" data-filter="3">Hôtels & Restaurants</button>
 			</div>
+			
 		<div class="gallery">
 		</div>
 	</section>
@@ -97,5 +111,19 @@
 		</ul>
 	</nav>
 </footer>
+
+<div class="modal" id="mediaModal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2>Galerie photo</h2>
+        <div class="modal-images"></div>
+		<div class="image-separator"></div>
+		<button>Ajoutez une photo</button>
+		<p>Supprimer la galerie</p>
+    </div>
+</div>
+
+
+</div>
 </body>
 </html>
