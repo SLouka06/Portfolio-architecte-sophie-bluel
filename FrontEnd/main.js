@@ -113,6 +113,7 @@ function afficherTravauxDansModale(data) {
     
     data.forEach(work => {
         const imageContainer = document.createElement('div');
+        imageContainer.style.position = 'relative';
         imageContainer.style.display = 'inline-block';
         imageContainer.style.margin = '10px';
 
@@ -131,6 +132,43 @@ function afficherTravauxDansModale(data) {
         span.style.cursor = 'pointer';
         span.style.marginTop = '5px';
 
+        const corbeilleIcon = document.createElement('i');
+        corbeilleIcon.addEventListener('click', () => {
+            supprimerTravailAvecToken(work.id, imageContainer, token); 
+        });
+        corbeilleIcon.className = 'fa fa-trash corbeille-icon';
+        corbeilleIcon.dataset.id = work.id; 
+        corbeilleIcon.style.position = 'absolute';  
+        corbeilleIcon.style.top = '7px';              
+        corbeilleIcon.style.right = '5px';
+        corbeilleIcon.style.cursor = 'pointer';
+        corbeilleIcon.style.color = 'white';  
+        corbeilleIcon.style.backgroundColor = 'black';  
+        corbeilleIcon.style.padding = '5px';
+
+        const moveIcon = document.createElement('i');
+        moveIcon.className = 'fas fa-arrows-alt';  // J'ai changé cela pour une classe FontAwesome standard
+        moveIcon.style.position = 'absolute';
+        moveIcon.style.top = '7px';  
+        moveIcon.style.right = '30px'; 
+        moveIcon.style.cursor = 'pointer';
+        moveIcon.style.color = 'white';
+        moveIcon.style.backgroundColor = 'black';
+        moveIcon.style.padding = '5px';
+        
+        moveIcon.style.display = 'none';  // Cache par défaut
+
+        // Événements pour afficher/masquer l'icône
+        img.addEventListener('mouseenter', () => {
+            moveIcon.style.display = 'block';  // Afficher lorsque la souris entre
+        });
+
+        img.addEventListener('mouseleave', () => {
+            moveIcon.style.display = 'none';  // Cacher lorsque la souris sort
+        });
+
+        imageContainer.appendChild(corbeilleIcon);
+        imageContainer.appendChild(moveIcon);  // Ajouté ici
         imageContainer.appendChild(img);
         imageContainer.appendChild(span);
 
@@ -139,8 +177,9 @@ function afficherTravauxDansModale(data) {
 }
 
 
+
 function viderModale() {
-    const modalImages = document.querySelector('.modal-content .modal-images');
+    modalImages = document.querySelector('.modal-content .modal-images');
     while (modalImages.firstChild) {
         modalImages.removeChild(modalImages.firstChild);
     }
@@ -174,3 +213,25 @@ window.addEventListener('click', function(event) {
         viderModale();
     }
 });
+
+// Fonction pour supprimer un travail avec un token
+async function supprimerTravailAvecToken(id, imageContainer, token) {
+    // Faites une requête HTTP pour supprimer le travail
+    try {
+        const response = await fetch(`https://votre-api.com/works/{id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`, // Utilisation du token
+            },
+        });
+
+        if (response.ok) {
+            // Si la requête a réussi, supprimez également le conteneur de l'image de la modale
+            imageContainer.remove();
+        } else {
+            console.error('Échec de la suppression du travail');
+        }
+    } catch (error) {
+        console.error('Une erreur est survenue:', error);
+    }
+}
