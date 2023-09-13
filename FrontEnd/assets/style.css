@@ -137,7 +137,7 @@ table {
 
 /** end reset css**/
 
-#main-container{
+#main-container {
 	max-width: 1140px;
 	margin: auto;
 	font-family: 'Work Sans';
@@ -151,7 +151,7 @@ header {
 	margin: 50px 0
 }
 
-li a{
+li a {
 	text-decoration: none;
 	color: #3D3D3D;
 }
@@ -208,14 +208,14 @@ li:hover {
 	flex: 1
 }
 
-figure .modification{
+figure .modification {
 	display: flex;
 	gap: 8px;
 	margin-left: 57px;
 	padding-top: 10px;
 }
 
-.modification button{
+.modification button {
 	font-family: Work sans;
 	font-size: 14px;
 	border: none;
@@ -223,7 +223,8 @@ figure .modification{
 	cursor: pointer;
 }
 
-.modification i, .modification button{
+.modification i,
+.modification button {
 	display: none;
 }
 
@@ -249,16 +250,16 @@ figure .modification{
 	text-align: center;
 }
 
-#portfolio .modification{
+#portfolio .modification {
 	display: flex;
 	align-items: center;
 	gap: 10px;
 }
 
-#portfolio .title-container{
+#portfolio .title-container {
 	display: flex;
-    align-items: center; 
-    justify-content: center;
+	align-items: center;
+	justify-content: center;
 	gap: 30px;
 }
 
@@ -358,30 +359,26 @@ input[type="submit"] {
 }
 
 footer {
-	
 	background-color: white;
-	height: 60px;
-	margin: 0;
-    padding: 0;
-    width: 100vw; 
-    box-sizing: border-box; 
-    position: relative; 
-    left: 50%;
-    right: 50%; 
-    margin-left: -50vw; 
-    margin-right: -50vw;
+	height: 140px;
+	width: 100%;
+	margin-top: auto;
 }
 
 footer nav {
-	display:flex;
+	display: flex;
 	justify-content: flex-end;
+	align-items: center;
+	height: 100%;
 }
 
 footer nav ul {
 	display: flex;
-	justify-content: flex-end;
-	margin: 2em
+	font-family: Work Sans;
+	padding-right: 1em;
+	margin: 0;
 }
+
 
 
 
@@ -451,12 +448,12 @@ input[type="submit"]:hover {
 	margin-bottom: 5px;
 }
 
-#forgot-password  {
+#forgot-password {
 	font-size: 14px;
 	color: #3D3D3D;
 }
 
-#login-error{
+#login-error {
 	color: red;
 	display: none;
 }
@@ -464,7 +461,7 @@ input[type="submit"]:hover {
 
 /*mode edition du site*/
 
-#mode-edition{
+#mode-edition {
 	display: none;
 	justify-content: center;
 	align-items: center;
@@ -478,7 +475,7 @@ input[type="submit"]:hover {
 	font-family: Work Sans;
 }
 
-#mode-edition button{
+#mode-edition button {
 	background-color: white;
 	font-family: Work Sans;
 	color: #1D6154;
@@ -496,31 +493,31 @@ input[type="submit"]:hover {
 
 /* Styles de base pour la modale */
 .modal {
-    display: none; 
-    position: fixed; 
-    top: 0;
-    left: 0;
-    width: 100%; 
-    height: 100%; 
-    background-color: rgba(0,0,0,0.7);
-    z-index: 1000; 
-    justify-content: center; 
-    align-items: center; 
-    
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+	z-index: 1000;
+	justify-content: center;
+	align-items: center;
+
 }
 
 /* Styles pour le contenu de la modale */
 .modal-content {
-    width: 630px; 
-    height: 731px;
-    background-color: #fff; 
-    position: relative; 
-    border-radius: 15px; 
-    padding: 20px; 
-    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5); 
+	width: 630px;
+	height: 731px;
+	background-color: #fff;
+	position: relative;
+	border-radius: 15px;
+	padding: 20px;
+	box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.5);
 }
 
-.modal h2{
+.modal h2 {
 	font-family: Work Sans;
 	display: flex;
 	justify-content: center;
@@ -529,33 +526,33 @@ input[type="submit"]:hover {
 
 /* Bouton de fermeture (X) */
 .close-btn {
-    position: absolute; 
-    top: 30px; 
-    right: 40px; 
-    font-size: 2.5em; 
-    cursor: pointer; 
+	position: absolute;
+	top: 30px;
+	right: 40px;
+	font-size: 2.5em;
+	cursor: pointer;
 }
 
 .modal-content .modal-images {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center; 
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
 	margin: 45px 20px 20px 20px;
 	padding-left: 50px;
 }
 
 .modal-content .image-separator {
-    width: 420px;
-    height: 1px;
-    background-color: #b3b3b3;
-    margin: 10px auto; 
+	width: 420px;
+	height: 1px;
+	background-color: #b3b3b3;
+	margin: 10px auto;
 }
 
 
 .modal-content button {
-    display: block; 
+	display: block;
 	font-size: 14px;
-    margin: 50px auto;
+	margin: 50px auto;
 	background-color: #1D6154;
 	color: white;
 	padding: 15px 70px;
@@ -580,68 +577,68 @@ input[type="submit"]:hover {
 
 
 .secondemodale {
-	display: none; 
-    position: fixed; 
-    top: 0;
-    left: 0;
-    width: 100%; 
-    height: 100%; 
-    background-color: rgba(0,0,0,0.7);
-    z-index: 1000; 
-    justify-content: center; 
-    align-items: center; 
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+	z-index: 1000;
+	justify-content: center;
+	align-items: center;
 }
 
 .seconde-modale-content {
 	display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 630px;
-    height: 670px;
-    background-color: #fff; 
-    position: relative; 
-    border-radius: 15px; 
-    padding: 20px; 
-    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
+	flex-direction: column;
+	align-items: center;
+	width: 630px;
+	height: 670px;
+	background-color: #fff;
+	position: relative;
+	border-radius: 15px;
+	padding: 20px;
+	box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.5);
 	position: relative;
 }
 
-.secondemodale h2{
+.secondemodale h2 {
 	font-family: Work Sans;
 	display: flex;
 	justify-content: center;
 	padding-top: 50px;
 }
 
-.return-arrow{
-    position: absolute;
-    top: 37px;
-    left: 40px;
-    font-size: 1.5em; 
-    cursor: pointer; 
+.return-arrow {
+	position: absolute;
+	top: 37px;
+	left: 40px;
+	font-size: 1.5em;
+	cursor: pointer;
 }
 
 #image-upload-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;  // Si vous voulez que les éléments soient en colonne
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column; // Si vous voulez que les éléments soient en colonne
 }
 
 
-  
+
 #selected-image {
-    display: none;
+	display: none;
 }
 
 
 
 
-.custom-img{
-    width: 76px;
-    height: 76px;
-    color: #B9C5CC;
-    font-size: 76px; 
+.custom-img {
+	width: 76px;
+	height: 76px;
+	color: #B9C5CC;
+	font-size: 76px;
 }
 
 #upload-image-form {
@@ -655,16 +652,17 @@ input[type="submit"]:hover {
 	flex-direction: column;
 	margin-top: 30px;
 	margin-bottom: 50px;
-  }
+}
 
-  #image-file{
+#image-file {
 	display: none;
-  }
-  label[for="image-file"] {
+}
+
+label[for="image-file"] {
 	width: 173px;
 	height: 36px;
-	display: flex; 
-	align-items: center; 
+	display: flex;
+	align-items: center;
 	justify-content: center;
 	font-size: 17px;
 	margin: 10px;
@@ -679,33 +677,38 @@ input[type="submit"]:hover {
 
 
 
-#project-name, #category-select {
+#project-name,
+#category-select {
 	box-sizing: border-box;
-    width: 420px;
-    height: 51px;
-    margin-top: 20px;
-    background: #FFF;
-    box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
-    border: none;
-    padding-left: 10px; 
-    border-radius: 3px; 
+	width: 420px;
+	height: 51px;
+	margin-top: 20px;
+	background: #FFF;
+	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+	border: none;
+	padding-left: 10px;
+	border-radius: 3px;
 }
 
 .seconde-modale-content .image-separator {
-    width: 420px;
-    height: 1px;
-    background-color: #b3b3b3;
-    margin: 50px auto; 
+	width: 420px;
+	height: 1px;
+	background-color: #b3b3b3;
+	margin: 50px auto;
 }
 
-.seconde-modale-content #valide-photo{
-	position: absolute;  /* Fixe le bouton en position absolue dans le conteneur parent */
-    bottom: 50px;        /* Le décale de 20px par rapport au bas du conteneur */
-    left: 50%;           /* Centrage horizontal */
-    transform: translateX(-50%);  /* Ajuste le centrage horizontal */
-	display: block; 
+.seconde-modale-content #valide-photo {
+	position: absolute;
+	/* Fixe le bouton en position absolue dans le conteneur parent */
+	bottom: 50px;
+	/* Le décale de 20px par rapport au bas du conteneur */
+	left: 50%;
+	/* Centrage horizontal */
+	transform: translateX(-50%);
+	/* Ajuste le centrage horizontal */
+	display: block;
 	font-size: 14px;
-    margin: 0px auto;
+	margin: 0px auto;
 	background: #A7A7A7;
 	color: white;
 	padding: 15px 70px;
@@ -715,8 +718,8 @@ input[type="submit"]:hover {
 }
 
 
-#error-message{
-	
+#error-message {
+
 	color: red;
 	display: none;
 }

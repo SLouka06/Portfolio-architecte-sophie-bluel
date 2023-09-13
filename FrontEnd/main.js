@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
         loginLink.textContent = 'Login';
         filter.forEach(btn => btn.style.display = ''); // Les filtres sont visibles
-        modifications.forEach(element => element.style.display = 'none'); // Les modifications sont masquées
+        modifications.forEach(element => element.style.display = 'none');
         loginLink.addEventListener('click', function (e) {
             e.preventDefault();
             const mainContent = document.querySelector('main');
@@ -223,7 +223,7 @@ window.addEventListener('click', function (event) {
 
 // Fonction pour supprimer un travail avec un token
 async function supprimerTravailAvecToken(id, imageContainer) {
-    if(document.getElementById(id)) {
+    if (document.getElementById(id)) {
         console.log("L'élément existe");
     } else {
         console.log("L'élément n'existe pas");
@@ -277,7 +277,7 @@ closeSecondModal.addEventListener('click', function () {
     resetImageUI();
     document.getElementById("project-name").value = "";
     document.getElementById("category-select").selectedIndex = 0;
-    
+
 });
 
 
@@ -310,45 +310,45 @@ function addToGallery(project) {
 
 
 // Ajoute un nouveau projet à la première modale
-function addToFirstModal(project) {// Écouteur pour la soumission du formulaire
-form.addEventListener('submit', async (event) => {
-    console.log('form submitted')
-    event.preventDefault();
-   
+function addToFirstModal(project) { // Écouteur pour la soumission du formulaire
+    form.addEventListener('submit', async (event) => {
+        console.log('form submitted')
+        event.preventDefault();
 
-    const formData = new FormData();
-    formData.append('image', fileInput.files[0]);
-    formData.append('title', projectName.value);
-    formData.append('category', categorySelect.value);
 
-    try {
-        let response = await fetch('http://localhost:5678/api/works', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-            },
-            body: formData
-        });
+        const formData = new FormData();
+        formData.append('image', fileInput.files[0]);
+        formData.append('title', projectName.value);
+        formData.append('category', categorySelect.value);
 
-        if (response.ok) {
-            const data = await response.json();
-            console.log("Réponse de l'API:", data); // Debug
-            addToGallery(data);
-            addToFirstModal(data);
-            form.reset();
-            resetImageUI();
-            secondeModale.style.display = "none"
-            document.getElementById("project-name").value = "";
-            document.getElementById("category-select").selectedIndex = 0;
-        } else {
-            const errorData = await response.json();
-            console.log("Erreur de l'API:", errorData); // Debug
-           
+        try {
+            let response = await fetch('http://localhost:5678/api/works', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: formData
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log("Réponse de l'API:", data); // Debug
+                addToGallery(data);
+                addToFirstModal(data);
+                form.reset();
+                resetImageUI();
+                secondeModale.style.display = "none"
+                document.getElementById("project-name").value = "";
+                document.getElementById("category-select").selectedIndex = 0;
+            } else {
+                const errorData = await response.json();
+                console.log("Erreur de l'API:", errorData); // Debug
+
+            }
+        } catch (error) {
+            console.error('Il y a eu un problème avec la requête Fetch:', error);
         }
-    } catch (error) {
-        console.error('Il y a eu un problème avec la requête Fetch:', error);
-    }
-});
+    });
 
     console.log('addToFirstModal est appelé', project);
     const firstModal = document.querySelector('.modal-images');
@@ -359,7 +359,7 @@ form.addEventListener('submit', async (event) => {
     firstModal.appendChild(newProject);
 }
 
-// Définir vos variables en premier
+
 const form = document.getElementById('upload-image-form');
 const fileInput = document.getElementById('image-file');
 const projectName = document.getElementById('project-name');
@@ -395,7 +395,7 @@ categorySelect.addEventListener('change', checkForm);
 form.addEventListener('submit', async (event) => {
     console.log('form submitted')
     event.preventDefault();
-   
+
 
     const formData = new FormData();
     formData.append('image', fileInput.files[0]);
@@ -424,7 +424,7 @@ form.addEventListener('submit', async (event) => {
         } else {
             const errorData = await response.json();
             console.log("Erreur de l'API:", errorData); // Debug
-           
+
         }
     } catch (error) {
         console.error('Il y a eu un problème avec la requête Fetch:', error);
@@ -448,7 +448,7 @@ imageFileInput.addEventListener('change', function () {
         reader.readAsDataURL(file);
         reader.onloadend = function () {
 
-            
+
 
             if (imageIcon && imageText && imageLabel && selectedImageElement) {
                 // Masquer le logo et le texte
@@ -476,8 +476,8 @@ imageFileInput.addEventListener('change', function () {
 function resetImageUI() {
     fileInput.value = '';
     document.getElementById("selected-image").src = '';
-    document.getElementById("selected-image").style.display = 'none'; 
-    document.getElementById("image-icon").style.display = 'block'; 
+    document.getElementById("selected-image").style.display = 'none';
+    document.getElementById("image-icon").style.display = 'block';
     document.getElementById("image-text").style.display = 'block';
-    document.querySelector('label[for="image-file"]').style.display = 'flex'; 
+    document.querySelector('label[for="image-file"]').style.display = 'flex';
 }
