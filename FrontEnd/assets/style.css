@@ -216,7 +216,7 @@ figure .modification {
 }
 
 .modification button {
-	font-family: Work sans;
+	font-family: "Work sans";
 	font-size: 14px;
 	border: none;
 	background-color: #FFFEF8;
@@ -374,7 +374,7 @@ footer nav {
 
 footer nav ul {
 	display: flex;
-	font-family: Work Sans;
+	font-family: "Work Sans";
 	padding-right: 1em;
 	margin: 0;
 }
@@ -472,12 +472,12 @@ input[type="submit"]:hover {
 
 #mode-edition p {
 	color: white;
-	font-family: Work Sans;
+	font-family: "Work Sans";
 }
 
 #mode-edition button {
 	background-color: white;
-	font-family: Work Sans;
+	font-family: "Work Sans";
 	color: #1D6154;
 	padding: 10px 20px;
 	margin: 0 5px;
@@ -518,7 +518,7 @@ input[type="submit"]:hover {
 }
 
 .modal h2 {
-	font-family: Work Sans;
+	font-family: "Work Sans";
 	display: flex;
 	justify-content: center;
 	padding-top: 30px;
@@ -604,7 +604,7 @@ input[type="submit"]:hover {
 }
 
 .secondemodale h2 {
-	font-family: Work Sans;
+	font-family: "Work Sans";
 	display: flex;
 	justify-content: center;
 	padding-top: 50px;
@@ -622,7 +622,7 @@ input[type="submit"]:hover {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	flex-direction: column; // Si vous voulez que les éléments soient en colonne
+	flex-direction: column; 
 }
 
 
@@ -667,7 +667,7 @@ label[for="image-file"] {
 	font-size: 17px;
 	margin: 10px;
 	color: #306685;
-	font-family: work sans;
+	font-family: "work sans";
 	background-color: #CBD6DC;
 	border: 1px solid #1D6154;
 	border-radius: 50px;
