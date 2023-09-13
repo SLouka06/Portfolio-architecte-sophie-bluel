@@ -1,5 +1,6 @@
+let token;
 document.addEventListener('DOMContentLoaded', function () {
-    const token = localStorage.getItem('token');
+    token = localStorage.getItem('token');
     const loginLink = document.querySelector('#login-link');
     const filter = document.querySelectorAll('.filter');
     const modifications = document.querySelectorAll('.modification i, .modification button');
@@ -25,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
             loginContainer.style.display = 'flex';
         });
     }
-    
+
 
     fetch('http://localhost:5678/api/works')
         .then(response => response.json())
@@ -33,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const gallery = document.querySelector('.gallery');
             data.forEach(work => {
                 const figure = document.createElement('figure');
+                figure.id = `gallery-element-${work.id}`;
                 figure.classList.add(work.categoryId);
                 const img = document.createElement('img');
                 img.src = work.imageUrl;
@@ -70,27 +72,27 @@ document.addEventListener('DOMContentLoaded', function () {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
         fetch('http://localhost:5678/api/users/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email,
-                password
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email,
+                    password
+                })
             })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.token) {
-                localStorage.setItem('token', data.token);
-                location.reload();
-            } else {
-                document.getElementById('login-error').style.display = 'block';
-            }
-        })
-        .catch(error => {
-            console.error('Erreur lors de la connexion:', error);
-        });
+            .then(response => response.json())
+            .then(data => {
+                if (data.token) {
+                    localStorage.setItem('token', data.token);
+                    location.reload();
+                } else {
+                    document.getElementById('login-error').style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Erreur lors de la connexion:', error);
+            });
     });
 
     const modeEdition = document.getElementById('mode-edition');
@@ -104,13 +106,13 @@ document.addEventListener('DOMContentLoaded', function () {
 //modale
 
 const modal = document.getElementById('mediaModal');
-const btnOpenModal = document.querySelector('#portfolio .modification button');  // Sélectionne le bouton "modifier" dans la section "portfolio"
+const btnOpenModal = document.querySelector('#portfolio .modification button');
 const closeModal = modal.querySelector('.close-btn');
 
 
 function afficherTravauxDansModale(data) {
     const modalImages = document.querySelector('.modal-content .modal-images');
-    
+
     data.forEach(work => {
         const imageContainer = document.createElement('div');
         imageContainer.style.position = 'relative';
@@ -123,7 +125,7 @@ function afficherTravauxDansModale(data) {
         img.style.width = '78.123px';
         img.style.height = '104.08px';
         img.style.display = 'block';
-        
+
         const span = document.createElement('span');
         span.textContent = 'éditer';
         span.style.display = 'block';
@@ -134,41 +136,41 @@ function afficherTravauxDansModale(data) {
 
         const corbeilleIcon = document.createElement('i');
         corbeilleIcon.addEventListener('click', () => {
-            supprimerTravailAvecToken(work.id, imageContainer, token); 
+            supprimerTravailAvecToken(work.id, imageContainer, token);
         });
+
         corbeilleIcon.className = 'fa fa-trash corbeille-icon';
-        corbeilleIcon.dataset.id = work.id; 
-        corbeilleIcon.style.position = 'absolute';  
-        corbeilleIcon.style.top = '7px';              
+        corbeilleIcon.dataset.id = work.id;
+        corbeilleIcon.style.position = 'absolute';
+        corbeilleIcon.style.top = '7px';
         corbeilleIcon.style.right = '5px';
         corbeilleIcon.style.cursor = 'pointer';
-        corbeilleIcon.style.color = 'white';  
-        corbeilleIcon.style.backgroundColor = 'black';  
+        corbeilleIcon.style.color = 'white';
+        corbeilleIcon.style.backgroundColor = 'black';
         corbeilleIcon.style.padding = '5px';
 
         const moveIcon = document.createElement('i');
-        moveIcon.className = 'fas fa-arrows-alt';  // J'ai changé cela pour une classe FontAwesome standard
+        moveIcon.className = 'fas fa-arrows-alt';
         moveIcon.style.position = 'absolute';
-        moveIcon.style.top = '7px';  
-        moveIcon.style.right = '30px'; 
+        moveIcon.style.top = '7px';
+        moveIcon.style.right = '30px';
         moveIcon.style.cursor = 'pointer';
         moveIcon.style.color = 'white';
         moveIcon.style.backgroundColor = 'black';
         moveIcon.style.padding = '5px';
-        
-        moveIcon.style.display = 'none';  // Cache par défaut
+        moveIcon.style.display = 'none';
 
-        // Événements pour afficher/masquer l'icône
+        // Événements pour afficher/masquer l'icône fléché
         img.addEventListener('mouseenter', () => {
-            moveIcon.style.display = 'block';  // Afficher lorsque la souris entre
+            moveIcon.style.display = 'block';
         });
 
         img.addEventListener('mouseleave', () => {
-            moveIcon.style.display = 'none';  // Cacher lorsque la souris sort
+            moveIcon.style.display = 'none';
         });
 
         imageContainer.appendChild(corbeilleIcon);
-        imageContainer.appendChild(moveIcon);  // Ajouté ici
+        imageContainer.appendChild(moveIcon);
         imageContainer.appendChild(img);
         imageContainer.appendChild(span);
 
@@ -187,10 +189,11 @@ function viderModale() {
 
 
 // Ouvrir la modale
-btnOpenModal.addEventListener('click', function() {
+btnOpenModal.addEventListener('click', function () {
     fetch('http://localhost:5678/api/works')
         .then(response => response.json())
         .then(data => {
+            viderModale(); // <-- Vider la modale ici
             afficherTravauxDansModale(data);
             modal.style.display = 'flex';
         })
@@ -200,38 +203,281 @@ btnOpenModal.addEventListener('click', function() {
 });
 
 
+
 // Fermer la modale avec la croix
-closeModal.addEventListener('click', function() {
+closeModal.addEventListener('click', function () {
     modal.style.display = 'none';
     viderModale();
 });
 
 // Fermer la modale en cliquant en dehors
-window.addEventListener('click', function(event) {
+window.addEventListener('click', function (event) {
     if (event.target == modal) {
         modal.style.display = 'none';
         viderModale();
     }
+    if (event.target == secondeModale) {
+        secondeModale.style.display = 'none';
+    }
 });
 
 // Fonction pour supprimer un travail avec un token
-async function supprimerTravailAvecToken(id, imageContainer, token) {
-    // Faites une requête HTTP pour supprimer le travail
+async function supprimerTravailAvecToken(id, imageContainer) {
+    if(document.getElementById(id)) {
+        console.log("L'élément existe");
+    } else {
+        console.log("L'élément n'existe pas");
+    }
     try {
-        const response = await fetch(`https://votre-api.com/works/{id}`, {
+        const response = await fetch(`http://localhost:5678/api/works/${id}`, {
             method: 'DELETE',
             headers: {
-                'Authorization': `Bearer ${token}`, // Utilisation du token
+                'Authorization': `Bearer ${token}`,
             },
         });
 
         if (response.ok) {
-            // Si la requête a réussi, supprimez également le conteneur de l'image de la modale
             imageContainer.remove();
+        }
+
+        const galleryElement = document.querySelector(`#gallery-element-${id}`);
+        if (galleryElement) {
+            galleryElement.remove();
+
         } else {
             console.error('Échec de la suppression du travail');
         }
+
+
     } catch (error) {
         console.error('Une erreur est survenue:', error);
     }
+}
+
+//deuxième modale
+
+const secondeModale = document.getElementById('seconde-modale');
+const ajouterPhotoBtn = document.getElementById('add-photo');
+ajouterPhotoBtn.addEventListener('click', function () {
+    modal.style.display = 'none';
+    secondeModale.style.display = 'flex';
+});
+
+const returnArrow = document.querySelector('.return-arrow');
+returnArrow.addEventListener('click', function () {
+    secondeModale.style.display = 'none';
+    modal.style.display = 'flex';
+    resetImageUI()
+});
+
+const closeSecondModal = document.querySelector('#seconde-modale .close-btn');
+closeSecondModal.addEventListener('click', function () {
+    secondeModale.style.display = 'none';
+    form.reset();
+    resetImageUI();
+    document.getElementById("project-name").value = "";
+    document.getElementById("category-select").selectedIndex = 0;
+    
+});
+
+
+// Récupération des catégories pour le menu déroulant de la seconde modale
+let categorySelect = document.getElementById('category-select');
+fetch('http://localhost:5678/api/categories')
+    .then(response => response.json())
+    .then(data => {
+        for (let category of data) {
+            const option = document.createElement('option');
+            option.value = category.id;
+            option.textContent = category.name;
+            categorySelect.appendChild(option);
+        }
+    })
+    .catch(error => {
+        console.error('Erreur lors de la récupération des catégories:', error);
+    });
+
+// Ajoute un nouveau projet à la galerie
+function addToGallery(project) {
+    const gallery = document.querySelector('.gallery');
+    const newProject = document.createElement('div');
+    newProject.id = `gallery-element-${project.id}`;
+    newProject.className = 'project-item';
+    newProject.innerHTML = `<img src="${project.imageUrl}" alt="${project.title}"> <p>${project.title}</p>`;
+    gallery.appendChild(newProject);
+}
+
+
+
+// Ajoute un nouveau projet à la première modale
+function addToFirstModal(project) {// Écouteur pour la soumission du formulaire
+form.addEventListener('submit', async (event) => {
+    console.log('form submitted')
+    event.preventDefault();
+   
+
+    const formData = new FormData();
+    formData.append('image', fileInput.files[0]);
+    formData.append('title', projectName.value);
+    formData.append('category', categorySelect.value);
+
+    try {
+        let response = await fetch('http://localhost:5678/api/works', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+            body: formData
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log("Réponse de l'API:", data); // Debug
+            addToGallery(data);
+            addToFirstModal(data);
+            form.reset();
+            resetImageUI();
+            secondeModale.style.display = "none"
+            document.getElementById("project-name").value = "";
+            document.getElementById("category-select").selectedIndex = 0;
+        } else {
+            const errorData = await response.json();
+            console.log("Erreur de l'API:", errorData); // Debug
+           
+        }
+    } catch (error) {
+        console.error('Il y a eu un problème avec la requête Fetch:', error);
+    }
+});
+
+    console.log('addToFirstModal est appelé', project);
+    const firstModal = document.querySelector('.modal-images');
+    const newProject = document.createElement('div');
+    newProject.id = `gallery-element-${project.id}`;
+    newProject.className = 'modal-project-item';
+    newProject.innerHTML = `<img src="${project.imageUrl}" alt="${project.title}"> <p>${project.title}</p>`;
+    firstModal.appendChild(newProject);
+}
+
+// Définir vos variables en premier
+const form = document.getElementById('upload-image-form');
+const fileInput = document.getElementById('image-file');
+const projectName = document.getElementById('project-name');
+let validePhotoButton = document.getElementById('valide-photo');
+
+// Fonction pour vérifier la validité du formulaire
+const checkForm = () => {
+    const errorMessage = document.getElementById('error-message');
+
+    if (fileInput.files[0] && projectName.value && categorySelect.value) {
+        validePhotoButton.disabled = false; // Activer le bouton
+        errorMessage.style.display = 'none'; // Cacher le message d'erreur
+    } else {
+        validePhotoButton.disabled = true; // Désactiver le bouton
+
+        let missingFields = [];
+        if (!fileInput.files[0]) missingFields.push("image");
+        if (!projectName.value) missingFields.push("nom du projet");
+        if (!categorySelect.value) missingFields.push("catégorie");
+
+        errorMessage.textContent = "Veuillez remplir les champs suivants : " + missingFields.join(", ");
+        errorMessage.style.display = 'block'; // Afficher le message d'erreur
+    }
+};
+
+// Ajout des écouteurs d'événements pour les éléments du formulaire
+fileInput.addEventListener('change', checkForm);
+projectName.addEventListener('input', checkForm);
+categorySelect.addEventListener('change', checkForm);
+
+
+// Écouteur pour la soumission du formulaire
+form.addEventListener('submit', async (event) => {
+    console.log('form submitted')
+    event.preventDefault();
+   
+
+    const formData = new FormData();
+    formData.append('image', fileInput.files[0]);
+    formData.append('title', projectName.value);
+    formData.append('category', categorySelect.value);
+
+    try {
+        let response = await fetch('http://localhost:5678/api/works', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+            body: formData
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log("Réponse de l'API:", data); // Debug
+            addToGallery(data);
+            addToFirstModal(data);
+            form.reset();
+            resetImageUI();
+            secondeModale.style.display = "none"
+            document.getElementById("project-name").value = "";
+            document.getElementById("category-select").selectedIndex = 0;
+        } else {
+            const errorData = await response.json();
+            console.log("Erreur de l'API:", errorData); // Debug
+           
+        }
+    } catch (error) {
+        console.error('Il y a eu un problème avec la requête Fetch:', error);
+    }
+});
+
+
+
+
+const imageFileInput = document.getElementById('image-file');
+const selectedImageElement = document.getElementById('selected-image');
+const imageWrapper = document.getElementById('image-upload-wrapper');
+const imageIcon = document.getElementById('image-icon');
+const imageText = document.getElementById('image-text');
+const imageLabel = document.querySelector('label[for="image-file"]'); // si vous n'avez pas d'ID pour le label
+
+imageFileInput.addEventListener('change', function () {
+    const file = this.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = function () {
+
+            
+
+            if (imageIcon && imageText && imageLabel && selectedImageElement) {
+                // Masquer le logo et le texte
+                imageIcon.style.display = 'none';
+                imageText.style.display = 'none';
+                imageLabel.style.display = 'none'; // Assurez-vous que cet élément existe ou il y aura une erreur
+
+                // Afficher l'image
+                selectedImageElement.src = reader.result;
+                selectedImageElement.style.display = 'block';
+
+                // Ajuster les dimensions de l'image
+                selectedImageElement.style.width = '129px';
+                selectedImageElement.style.height = '169px';
+
+                // Pour centrer l'image
+                imageWrapper.style.justifyContent = 'center';
+            } else {
+                console.log("One or more elements not found");
+            }
+        };
+    }
+});
+
+function resetImageUI() {
+    fileInput.value = '';
+    document.getElementById("selected-image").src = '';
+    document.getElementById("selected-image").style.display = 'none'; 
+    document.getElementById("image-icon").style.display = 'block'; 
+    document.getElementById("image-text").style.display = 'block';
+    document.querySelector('label[for="image-file"]').style.display = 'flex'; 
 }
