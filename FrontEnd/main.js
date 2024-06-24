@@ -1,3 +1,5 @@
+const apiBaseUrl = 'https://ton-service.onrender.com';
+
 let token;
 document.addEventListener('DOMContentLoaded', function () {
     token = localStorage.getItem('token');
@@ -27,8 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-
-    fetch('http://localhost:5678/api/works')
+    fetch(`${apiBaseUrl}/api/works`)
         .then(response => response.json())
         .then(data => {
             const gallery = document.querySelector('.gallery');
@@ -71,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
-        fetch('http://localhost:5678/api/users/login', {
+        fetch(`${apiBaseUrl}/api/users/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -99,16 +100,13 @@ document.addEventListener('DOMContentLoaded', function () {
     if (token && modeEdition) {
         modeEdition.style.display = 'flex';
     }
-
 });
-
 
 //modale
 
 const modal = document.getElementById('mediaModal');
 const btnOpenModal = document.querySelector('#portfolio .modification button');
 const closeModal = modal.querySelector('.close-btn');
-
 
 function afficherTravauxDansModale(data) {
     const modalImages = document.querySelector('.modal-content .modal-images');
@@ -178,22 +176,19 @@ function afficherTravauxDansModale(data) {
     });
 }
 
-
-
 function viderModale() {
-    modalImages = document.querySelector('.modal-content .modal-images');
+    const modalImages = document.querySelector('.modal-content .modal-images');
     while (modalImages.firstChild) {
         modalImages.removeChild(modalImages.firstChild);
     }
 }
 
-
 // Ouvrir la modale
 btnOpenModal.addEventListener('click', function () {
-    fetch('http://localhost:5678/api/works')
+    fetch(`${apiBaseUrl}/api/works`)
         .then(response => response.json())
         .then(data => {
-            viderModale(); // <-- Vider la modale ici
+            viderModale();
             afficherTravauxDansModale(data);
             modal.style.display = 'flex';
         })
@@ -201,8 +196,6 @@ btnOpenModal.addEventListener('click', function () {
             console.error('Erreur lors de la récupération des travaux:', error);
         });
 });
-
-
 
 // Fermer la modale avec la croix
 closeModal.addEventListener('click', function () {
@@ -229,7 +222,7 @@ async function supprimerTravailAvecToken(id, imageContainer) {
         console.log("L'élément n'existe pas");
     }
     try {
-        const response = await fetch(`http://localhost:5678/api/works/${id}`, {
+        const response = await fetch(`${apiBaseUrl}/api/works/${id}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -247,7 +240,6 @@ async function supprimerTravailAvecToken(id, imageContainer) {
         } else {
             console.error('Échec de la suppression du travail');
         }
-
 
     } catch (error) {
         console.error('Une erreur est survenue:', error);
@@ -267,7 +259,7 @@ const returnArrow = document.querySelector('.return-arrow');
 returnArrow.addEventListener('click', function () {
     secondeModale.style.display = 'none';
     modal.style.display = 'flex';
-    resetImageUI()
+    resetImageUI();
 });
 
 const closeSecondModal = document.querySelector('#seconde-modale .close-btn');
@@ -277,13 +269,11 @@ closeSecondModal.addEventListener('click', function () {
     resetImageUI();
     document.getElementById("project-name").value = "";
     document.getElementById("category-select").selectedIndex = 0;
-
 });
-
 
 // Récupération des catégories pour le menu déroulant de la seconde modale
 let categorySelect = document.getElementById('category-select');
-fetch('http://localhost:5678/api/categories')
+fetch(`${apiBaseUrl}/api/categories`)
     .then(response => response.json())
     .then(data => {
         for (let category of data) {
@@ -307,50 +297,8 @@ function addToGallery(project) {
     gallery.appendChild(newProject);
 }
 
-
-
 // Ajoute un nouveau projet à la première modale
-function addToFirstModal(project) { // Écouteur pour la soumission du formulaire
-    form.addEventListener('submit', async (event) => {
-        console.log('form submitted')
-        event.preventDefault();
-
-
-        const formData = new FormData();
-        formData.append('image', fileInput.files[0]);
-        formData.append('title', projectName.value);
-        formData.append('category', categorySelect.value);
-
-        try {
-            let response = await fetch('http://localhost:5678/api/works', {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-                body: formData
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                console.log("Réponse de l'API:", data); // Debug
-                addToGallery(data);
-                addToFirstModal(data);
-                form.reset();
-                resetImageUI();
-                secondeModale.style.display = "none"
-                document.getElementById("project-name").value = "";
-                document.getElementById("category-select").selectedIndex = 0;
-            } else {
-                const errorData = await response.json();
-                console.log("Erreur de l'API:", errorData); // Debug
-
-            }
-        } catch (error) {
-            console.error('Il y a eu un problème avec la requête Fetch:', error);
-        }
-    });
-
-    console.log('addToFirstModal est appelé', project);
+function addToFirstModal(project) {
     const firstModal = document.querySelector('.modal-images');
     const newProject = document.createElement('div');
     newProject.id = `gallery-element-${project.id}`;
@@ -358,7 +306,6 @@ function addToFirstModal(project) { // Écouteur pour la soumission du formulair
     newProject.innerHTML = `<img src="${project.imageUrl}" alt="${project.title}"> <p>${project.title}</p>`;
     firstModal.appendChild(newProject);
 }
-
 
 const form = document.getElementById('upload-image-form');
 const fileInput = document.getElementById('image-file');
@@ -390,12 +337,10 @@ fileInput.addEventListener('change', checkForm);
 projectName.addEventListener('input', checkForm);
 categorySelect.addEventListener('change', checkForm);
 
-
 // Écouteur pour la soumission du formulaire
 form.addEventListener('submit', async (event) => {
-    console.log('form submitted')
+    console.log('form submitted');
     event.preventDefault();
-
 
     const formData = new FormData();
     formData.append('image', fileInput.files[0]);
@@ -403,7 +348,7 @@ form.addEventListener('submit', async (event) => {
     formData.append('category', categorySelect.value);
 
     try {
-        let response = await fetch('http://localhost:5678/api/works', {
+        let response = await fetch(`${apiBaseUrl}/api/works`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -418,21 +363,17 @@ form.addEventListener('submit', async (event) => {
             addToFirstModal(data);
             form.reset();
             resetImageUI();
-            secondeModale.style.display = "none"
+            secondeModale.style.display = "none";
             document.getElementById("project-name").value = "";
             document.getElementById("category-select").selectedIndex = 0;
         } else {
             const errorData = await response.json();
             console.log("Erreur de l'API:", errorData); // Debug
-
         }
     } catch (error) {
         console.error('Il y a eu un problème avec la requête Fetch:', error);
     }
 });
-
-
-
 
 const imageFileInput = document.getElementById('image-file');
 const selectedImageElement = document.getElementById('selected-image');
@@ -447,14 +388,11 @@ imageFileInput.addEventListener('change', function () {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onloadend = function () {
-
-
-
             if (imageIcon && imageText && imageLabel && selectedImageElement) {
                 // Masquer le logo et le texte
                 imageIcon.style.display = 'none';
                 imageText.style.display = 'none';
-                imageLabel.style.display = 'none'; // Assurez-vous que cet élément existe ou il y aura une erreur
+                imageLabel.style.display = 'none';
 
                 // Afficher l'image
                 selectedImageElement.src = reader.result;
